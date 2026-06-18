@@ -31,13 +31,23 @@ export const Range = (props: RangeProps) => {
   const minPct = toPercent(minVal)
   const maxPct = toPercent(maxVal)
 
+  const handleLabelClick = (v: number) => {
+    const distMin = Math.abs(v - minVal)
+    const distMax = Math.abs(v - maxVal)
+    if (distMin <= distMax) {
+      onChange([Math.min(v, maxVal), maxVal])
+    } else {
+      onChange([minVal, Math.max(v, minVal)])
+    }
+  }
+
   return (
     <div style={{ width: "100%" }}>
-        <div ref={trackRef} className="bar">
-           <div
-            className="bar-progress"
-            style={{ left: `${minPct}%`, right: `${100 - maxPct}%` }}
-           />
+      <div ref={trackRef} className="bar">
+        <div
+          className="bar-progress"
+          style={{ left: `${minPct}%`, right: `${100 - maxPct}%` }}
+        />
         <div
           {...dragEvents("min")}
           data-testid="handler-min"
@@ -45,10 +55,10 @@ export const Range = (props: RangeProps) => {
           style={{ left: `${minPct}%` }}
         />
         <div
-            {...dragEvents("max")}
-            data-testid="handler-max"
-            className={`handler max ${dragging === "max" ? "dragging" : ""}`}
-            style={{ left: `${maxPct}%` }}
+          {...dragEvents("max")}
+          data-testid="handler-max"
+          className={`handler max ${dragging === "max" ? "dragging" : ""}`}
+          style={{ left: `${maxPct}%` }}
         />
       </div>
 
@@ -57,6 +67,7 @@ export const Range = (props: RangeProps) => {
           {props.values.map((v) => (
             <span
               key={v}
+              onClick={() => handleLabelClick(v)}
               className={`range-label ${v >= minVal && v <= maxVal ? "selected" : ""}`}
               style={{ left: `${toPercent(v)}%` }}
             >

@@ -17,6 +17,7 @@ const clamp = (n: number, lo: number, hi: number) =>
 export const useRangeDrag = (props: Props) => {
   const { min, max, value, onChange, getValue } = props
   const trackRef = useRef<HTMLDivElement>(null)
+  const draggingRef = useRef<Handle | null>(null)
   const [dragging, setDragging] = useState<Handle | null>(null)
 
   const getValueFromX = (clientX: number) => {
@@ -40,16 +41,18 @@ export const useRangeDrag = (props: Props) => {
     onPointerDown: (e: PointerEvent) => {
       e.preventDefault()
       const target = e.target as HTMLElement
-      target.setPointerCapture(e.pointerId)
+      target.setPointerCapture?.(e.pointerId)
+      draggingRef.current = handle
       setDragging(handle)
     },
     onPointerMove: (e: PointerEvent) => {
-      if (dragging !== handle) return
+      if (draggingRef.current !== handle) return
       handleUpdate(handle, getValueFromX(e.clientX))
     },
     onPointerUp: (e: PointerEvent) => {
       const target = e.target as HTMLElement
-      target.releasePointerCapture(e.pointerId)
+      target.releasePointerCapture?.(e.pointerId)
+      draggingRef.current = null
       setDragging(null)
     },
   })

@@ -55,3 +55,44 @@ input, textarea { cursor: text; user-select: text; }
 }
 
 .back:hover { opacity: 0.6; }
+
+.home-title { font-size: 24px; font-weight: 600; margin: 0 0 40px; text-align: center; }
+.home-sub { color: #71717a; margin: 0 0 40px; font-size: 15px; }
+
+.exercises {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .exercises { grid-template-columns: 1fr 1fr; }
+}
+
+.exercise-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #d4d4d8;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 150ms;
+}
+
+.exercise-card:hover { border-color: #000; }
+
+.exercise-card h2 { font-size: 18px; font-weight: 600; margin: 0 0 8px; }
+.exercise-card p { font-size: 14px; color: #71717a; margin: 0; }
+
+.exercise-footer {
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.exercise-arrow { transition: transform 150ms; }
+.exercise-card:hover .exercise-arrow { transform: translateX(4px); }
