@@ -3,7 +3,6 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Range",
-  description: "Custom range slider component",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
